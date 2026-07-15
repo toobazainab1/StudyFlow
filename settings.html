@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings – StudyFlow</title>
+  <meta name="description" content="Manage your StudyFlow appearance, data backups, and preferences.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,500;0,700;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       TOP HEADER
+  ============================================================= -->
+  <header class="app-header">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+      <span class="sidebar-toggle-bar"></span>
+      <span class="sidebar-toggle-bar"></span>
+      <span class="sidebar-toggle-bar"></span>
+    </button>
+
+    <div class="header-greeting">
+      <p class="greeting-label">Settings</p>
+      <p class="greeting-name">Tooba</p>
+    </div>
+
+    <div class="header-actions" style="margin-left: auto;">
+      <button type="button" class="icon-btn" id="darkModeToggle" title="Switch to dark mode" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+
+      <a href="index.html" class="avatar-btn" title="Back to dashboard" aria-label="Back to dashboard">
+        <span class="avatar">TZ</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="app-shell">
+
+    <!-- ============================================================
+         SIDEBAR NAVIGATION (same shell as dashboard, Settings active)
+    ============================================================= -->
+    <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a href="index.html" class="sidebar-logo">
+        <span class="logo-mark" aria-hidden="true">◆</span>
+        <span class="logo-text">StudyFlow</span>
+      </a>
+
+      <ul class="sidebar-nav">
+        <li>
+          <a href="index.html#dashboard" class="nav-link" title="View your dashboard overview">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#assignments" class="nav-link" title="View your assignments">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#courses" class="nav-link" title="View your enrolled courses">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span>Courses</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#calendar" class="nav-link" title="Open calendar">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span>Calendar</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#pomodoro" class="nav-link" title="Open the Pomodoro focus timer">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Pomodoro</span>
+          </a>
+        </li>
+        <li>
+          <a href="index.html#notes" class="nav-link" title="View your notes">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            <span>Notes</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-link active" title="Open settings" aria-current="page">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <a href="index.html" class="logout-btn" title="Back to dashboard">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>Back to Dashboard</span>
+      </a>
+    </nav>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ============================================================
+         MAIN CONTENT — Settings only
+    ============================================================= -->
+    <main class="main-content">
+
+      <section class="panel settings-panel" aria-labelledby="settingsHeading">
+        <h2 id="settingsHeading" class="panel-title">Settings</h2>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <p class="settings-row-title">Dark mode</p>
+            <p class="settings-row-desc">Switch between light and dark appearance across StudyFlow.</p>
+          </div>
+          <button type="button" class="btn btn-ghost" id="settingsThemeToggle" title="Toggle dark mode">Toggle</button>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <p class="settings-row-title">Export your data</p>
+            <p class="settings-row-desc">Download all assignments, courses, exams, and notes as a JSON backup file.</p>
+          </div>
+          <button type="button" class="btn btn-ghost" id="exportDataBtn" title="Download a backup of your data">Export</button>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <p class="settings-row-title">Import your data</p>
+            <p class="settings-row-desc">Restore from a previously exported StudyFlow backup file.</p>
+          </div>
+          <label class="btn btn-ghost import-label" title="Choose a backup file to import">
+            Import
+            <input type="file" id="importDataInput" accept="application/json" class="visually-hidden">
+          </label>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-row-text">
+            <p class="settings-row-title">Clear all data</p>
+            <p class="settings-row-desc">Permanently delete all assignments, courses, exams, and notes from this browser.</p>
+          </div>
+          <button type="button" class="btn btn-danger" id="clearDataBtn" title="Delete all StudyFlow data">Clear Data</button>
+        </div>
+
+        <p class="settings-shortcuts-title">Keyboard shortcuts</p>
+        <ul class="settings-shortcuts">
+          <li><kbd>/</kbd> Focus search (on Dashboard)</li>
+          <li><kbd>Esc</kbd> Close open form, menu, or popup</li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================= -->
+  <footer class="app-footer">
+    <p class="footer-brand">StudyFlow</p>
+    <p class="footer-tagline">&copy; 2026 &mdash; Plan smarter. Study better.</p>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/settings.js"></script>
+</body>
+</html>

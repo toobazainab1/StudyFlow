@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyFlow – Student Productivity Dashboard</title>
+  <meta name="description" content="StudyFlow helps university students organize assignments, courses, exams, and study time in one elegant dashboard.">
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,500;0,700;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Print-only header (hidden on screen, shown via @media print) -->
+  <div class="print-header" aria-hidden="true">
+    <h1>StudyFlow — Assignments</h1>
+    <p id="printDate"></p>
+  </div>
+
+  <!-- ============================================================
+       TOP HEADER (mobile) / persists across all breakpoints
+  ============================================================= -->
+  <header class="app-header">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+      <span class="sidebar-toggle-bar"></span>
+      <span class="sidebar-toggle-bar"></span>
+      <span class="sidebar-toggle-bar"></span>
+    </button>
+
+    <div class="header-greeting">
+      <p class="greeting-label">Good Morning,</p>
+      <p class="greeting-name">Tooba</p>
+    </div>
+
+    <div class="header-search">
+      <label for="assignmentSearch" class="visually-hidden">Search assignments</label>
+      <input type="search" id="assignmentSearch" name="assignmentSearch" placeholder="Search assignments…">
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="icon-btn" id="darkModeToggle" title="Switch to dark mode" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+
+      <button type="button" class="icon-btn" title="View notifications" aria-label="View notifications">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="badge" id="notifBadge">2</span>
+      </button>
+
+      <button type="button" class="avatar-btn" title="Open profile menu" aria-label="Open profile menu">
+        <span class="avatar">TZ</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+
+    <!-- ============================================================
+         SIDEBAR NAVIGATION
+    ============================================================= -->
+    <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a href="#" class="sidebar-logo">
+        <span class="logo-mark" aria-hidden="true">◆</span>
+        <span class="logo-text">StudyFlow</span>
+      </a>
+
+      <ul class="sidebar-nav">
+        <li>
+          <a href="#dashboard" class="nav-link active" data-view="dashboard" title="View your dashboard overview" aria-current="page">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#assignments" class="nav-link" data-view="assignments" title="View your assignments">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Assignments</span>
+          </a>
+        </li>
+        <li>
+          <a href="#courses" class="nav-link" data-view="courses" title="View your enrolled courses">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span>Courses</span>
+          </a>
+        </li>
+        <li>
+          <a href="#calendar" class="nav-link" id="calendarNavLink" data-view="calendar" title="Open calendar">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span>Calendar</span>
+          </a>
+        </li>
+        <li>
+          <a href="#pomodoro" class="nav-link" data-view="pomodoro" title="Open the Pomodoro focus timer">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Pomodoro</span>
+          </a>
+        </li>
+        <li>
+          <a href="#notes" class="nav-link" data-view="notes" title="View your notes">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            <span>Notes</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-link nav-link--external" title="Open settings">
+            <svg class="icon nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <button type="button" class="logout-btn" title="Log out of StudyFlow">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span>Logout</span>
+      </button>
+    </nav>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ============================================================
+         MAIN CONTENT
+    ============================================================= -->
+    <main class="main-content" id="mainContent">
+
+      <!-- Welcome Card -->
+      <section class="welcome-card" id="dashboard" aria-labelledby="welcomeHeading">
+        <div class="welcome-text">
+          <p class="welcome-date" id="todayDate"></p>
+          <h1 id="welcomeHeading" class="welcome-quote">"Consistency beats intensity."</h1>
+          <p class="welcome-streak">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            <span><strong id="studyStreak">6</strong>-day study streak</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- Statistics Cards -->
+      <section class="stats-grid" aria-label="Study statistics overview">
+        <article class="stat-card">
+          <svg class="icon stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <p class="stat-value" id="statAssignments">0</p>
+          <p class="stat-label">Assignments</p>
+        </article>
+        <article class="stat-card">
+          <svg class="icon stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <p class="stat-value" id="statCourses">5</p>
+          <p class="stat-label">Courses</p>
+        </article>
+        <article class="stat-card">
+          <svg class="icon stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <p class="stat-value" id="statHours">18</p>
+          <p class="stat-label">Study Hours</p>
+        </article>
+        <article class="stat-card">
+          <svg class="icon stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <p class="stat-value" id="statCompletion">0%</p>
+          <p class="stat-label">Completion Rate</p>
+        </article>
+      </section>
+
+      <div class="dashboard-columns">
+
+        <div class="column-main">
+
+          <!-- Assignments Section -->
+          <section class="panel assignments-panel" id="assignments" aria-labelledby="assignmentsHeading">
+            <div class="panel-header">
+              <h2 id="assignmentsHeading" class="panel-title">Assignments</h2>
+              <button type="button" class="btn btn-primary" id="addAssignmentBtn" title="Add a new assignment">+ Add Assignment</button>
+            </div>
+
+            <!-- Add Assignment Form (hidden until toggled) -->
+            <form id="assignmentForm" class="assignment-form" hidden>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="assignmentCourse">Course name</label>
+                  <input type="text" id="assignmentCourse" name="assignmentCourse" required placeholder="e.g. Database Systems">
+                </div>
+                <div class="form-group">
+                  <label for="assignmentTitle">Assignment title</label>
+                  <input type="text" id="assignmentTitle" name="assignmentTitle" required placeholder="e.g. ER Diagram Submission">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="assignmentDueDate">Due date</label>
+                  <input type="date" id="assignmentDueDate" name="assignmentDueDate">
+                </div>
+                <div class="form-group">
+                  <label for="assignmentPriority">Priority</label>
+                  <select id="assignmentPriority" name="assignmentPriority" title="Choose how urgent this assignment is">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="assignmentTime">Estimated time</label>
+                  <input type="text" id="assignmentTime" name="assignmentTime" placeholder="e.g. 2 hrs">
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" title="Save this assignment">Save Assignment</button>
+                <button type="button" class="btn btn-ghost" id="cancelAssignmentBtn" title="Cancel and close this form">Cancel</button>
+              </div>
+            </form>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar" role="group" aria-label="Filter assignments">
+              <button class="filter-btn active" data-filter="all" title="Show all assignments">All</button>
+              <button class="filter-btn" data-filter="pending" title="Show pending assignments">Pending</button>
+              <button class="filter-btn" data-filter="completed" title="Show completed assignments">Completed</button>
+              <button class="filter-btn" data-filter="high" title="Show high priority assignments">High</button>
+              <button class="filter-btn" data-filter="medium" title="Show medium priority assignments">Medium</button>
+              <button class="filter-btn" data-filter="low" title="Show low priority assignments">Low</button>
+            </div>
+
+            <ul class="assignment-list" id="assignmentList">
+              <!-- Assignment cards injected by JS (includes Edit / Complete / Delete buttons) -->
+            </ul>
+            <p class="empty-state" id="assignmentEmptyState" hidden>
+              <svg class="icon empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <span>No assignments yet. Add one above to get started.</span>
+            </p>
+          </section>
+
+          <!-- Today's Schedule -->
+          <section class="panel schedule-panel" aria-labelledby="scheduleHeading">
+            <h2 id="scheduleHeading" class="panel-title">Today's Schedule</h2>
+            <ol class="schedule-timeline" id="scheduleTimeline">
+              <li class="schedule-item">
+                <span class="schedule-time">9 AM</span>
+                <span class="schedule-dot" aria-hidden="true"></span>
+                <span class="schedule-subject">Software Engineering</span>
+              </li>
+              <li class="schedule-item">
+                <span class="schedule-time">11 AM</span>
+                <span class="schedule-dot" aria-hidden="true"></span>
+                <span class="schedule-subject">Database Systems</span>
+              </li>
+              <li class="schedule-item">
+                <span class="schedule-time">2 PM</span>
+                <span class="schedule-dot" aria-hidden="true"></span>
+                <span class="schedule-subject">AI Lab</span>
+              </li>
+            </ol>
+          </section>
+
+          <!-- Courses & Progress Section -->
+          <section class="panel courses-panel" id="courses" aria-labelledby="coursesHeading">
+            <div class="panel-header">
+              <h2 id="coursesHeading" class="panel-title">Courses &amp; Progress</h2>
+              <button type="button" class="btn btn-primary" id="addCourseBtn" title="Add a new course">+ Add Course</button>
+            </div>
+
+            <form id="courseForm" class="assignment-form" hidden>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="courseName">Course name</label>
+                  <input type="text" id="courseName" name="courseName" required placeholder="e.g. Computer Networks">
+                </div>
+                <div class="form-group">
+                  <label for="courseProgress">Progress (%)</label>
+                  <input type="number" id="courseProgress" name="courseProgress" min="0" max="100" step="1" value="0" required>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" title="Save this course">Save Course</button>
+                <button type="button" class="btn btn-ghost" id="cancelCourseBtn" title="Cancel and close this form">Cancel</button>
+              </div>
+            </form>
+
+            <div class="progress-list" id="progressList">
+              <!-- Course progress items injected by JS -->
+            </div>
+            <p class="empty-state" id="courseEmptyState" hidden>
+              <svg class="icon empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <span>No courses yet. Add one above to start tracking progress.</span>
+            </p>
+          </section>
+
+        </div>
+
+        <aside class="column-side">
+
+          <!-- Upcoming Exams -->
+          <section class="panel exams-panel" aria-labelledby="examsHeading">
+            <div class="panel-header">
+              <h2 id="examsHeading" class="panel-title">Upcoming Exams</h2>
+              <button type="button" class="btn btn-primary" id="addExamBtn" title="Add a new exam">+ Add</button>
+            </div>
+
+            <form id="examForm" class="assignment-form" hidden>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="examCourse">Course</label>
+                  <input type="text" id="examCourse" name="examCourse" required placeholder="e.g. Database Systems">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="examDate">Exam date</label>
+                  <input type="date" id="examDate" name="examDate" required>
+                </div>
+                <div class="form-group">
+                  <label for="examDifficulty">Difficulty</label>
+                  <select id="examDifficulty" name="examDifficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary" title="Save this exam">Save Exam</button>
+                <button type="button" class="btn btn-ghost" id="cancelExamBtn" title="Cancel and close this form">Cancel</button>
+              </div>
+            </form>
+
+            <ul class="exam-list" id="examList">
+              <!-- Exam cards injected by JS -->
+            </ul>
+            <p class="empty-state" id="examEmptyState" hidden>
+              <svg class="icon empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              <span>No exams scheduled. Add one above.</span>
+            </p>
+          </section>
+
+          <!-- Pomodoro Card -->
+          <section class="panel pomodoro-panel" id="pomodoro" aria-labelledby="pomodoroHeading">
+            <h2 id="pomodoroHeading" class="panel-title">Focus Timer</h2>
+            <div class="pomodoro-widget">
+              <div class="pomodoro-ring-wrapper">
+                <svg class="pomodoro-ring" viewBox="0 0 120 120" aria-hidden="true">
+                  <circle class="pomodoro-ring-bg" cx="60" cy="60" r="54"/>
+                  <circle class="pomodoro-ring-fill" id="pomodoroRingFill" cx="60" cy="60" r="54"/>
+                </svg>
+                <p class="pomodoro-time" id="pomodoroTime">25:00</p>
+              </div>
+              <div class="pomodoro-controls">
+                <button type="button" class="btn btn-primary" id="pomodoroStart" title="Start the focus timer">Start</button>
+                <button type="button" class="btn btn-ghost" id="pomodoroPause" title="Pause the focus timer">Pause</button>
+                <button type="button" class="btn btn-ghost" id="pomodoroReset" title="Reset the focus timer">Reset</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Notes Card -->
+          <section class="panel notes-panel" id="notes" aria-labelledby="notesHeading">
+            <h2 id="notesHeading" class="panel-title">Quick Notes</h2>
+            <label for="notesTextarea" class="visually-hidden">Write a quick note</label>
+            <textarea id="notesTextarea" class="notes-textarea" placeholder="Jot down a quick note…" rows="5"></textarea>
+            <button type="button" class="btn btn-primary" id="saveNotesBtn" title="Save this note">Save Notes</button>
+            <p class="notes-saved-msg" id="notesSavedMsg" hidden>Saved</p>
+          </section>
+
+        </aside>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================
+       CALENDAR MODAL (popup, triggered from sidebar/bottom nav)
+  ============================================================= -->
+  <div class="modal-overlay" id="calendarModalOverlay" hidden></div>
+  <div class="modal calendar-modal" id="calendarModal" role="dialog" aria-modal="true" aria-labelledby="calendarHeading" hidden>
+    <div class="panel-header">
+      <h2 id="calendarHeading" class="panel-title">Calendar</h2>
+      <button type="button" class="icon-btn modal-close-btn" id="calendarModalCloseBtn" title="Close calendar" aria-label="Close calendar">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="calendar-nav">
+      <button type="button" class="icon-btn" id="calendarPrevBtn" title="Previous month" aria-label="Previous month">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <span class="calendar-month-label" id="calendarMonthLabel"></span>
+      <button type="button" class="icon-btn" id="calendarNextBtn" title="Next month" aria-label="Next month">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="calendar-weekdays">
+      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+    </div>
+    <div class="calendar-grid" id="calendarGrid" aria-label="Month calendar with assignment and exam due dates highlighted">
+      <!-- Calendar day cells injected by JS -->
+    </div>
+    <p class="calendar-legend">
+      <span class="legend-dot legend-dot--assignment"></span> Assignment due
+      <span class="legend-dot legend-dot--exam"></span> Exam
+    </p>
+  </div>
+
+  <!-- ============================================================
+       BOTTOM NAVIGATION (mobile only)
+  ============================================================= -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="#dashboard" class="bottom-nav-link active" data-view="dashboard" title="Dashboard">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#assignments" class="bottom-nav-link" data-view="assignments" title="Assignments">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span>Tasks</span>
+    </a>
+    <a href="#calendar" class="bottom-nav-link" id="calendarBottomNavLink" data-view="calendar" title="Calendar">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span>Calendar</span>
+    </a>
+    <a href="#pomodoro" class="bottom-nav-link" data-view="pomodoro" title="Focus Timer">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      <span>Focus</span>
+    </a>
+    <a href="#notes" class="bottom-nav-link" data-view="notes" title="Notes">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      <span>Notes</span>
+    </a>
+  </nav>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================= -->
+  <footer class="app-footer">
+    <p class="footer-brand">StudyFlow</p>
+    <p class="footer-tagline">&copy; 2026 &mdash; Plan smarter. Study better.</p>
+  </footer>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
